@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Cell from './Cell';
 
@@ -15,28 +15,36 @@ function Board() {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const [status, setStatus] = useState(null);
-  const winnerCheck = (arr) => {
-    for (let i = 0; i < winningList.length; i++) {
-      const [x, y, z] = winningList[i];
-      if (arr[x] && arr[x] === arr[y] && arr[x] === arr[z]) {
-        setStatus('winner');
-      } else {
-        setStatus('looser');
+  const [status, setStatus] = useState(false);
+  const winnerCheck = useCallback(
+    (arr) => {
+      for (let i = 0; i < winningList.length; i++) {
+        const [x, y, z] = winningList[i];
+        if (arr[x] && arr[x] === arr[y] && arr[x] === arr[z]) {
+          return arr[x];
+        }
       }
-    }
-    console.log(status);
-  };
+      return null;
+    },
+    [winningList]
+  );
   const playerClick = (i) => {
     let temp = board;
     temp[i] = player === 'one' ? 'X' : 'O';
     setBoard(temp);
     setPlayer(() => (player === 'one' ? 'two' : 'one'));
-    winnerCheck(board);
+    //
   };
   function renderCell(i) {
     return <Cell value={board[i]} onHandleClick={() => playerClick(i)} />;
   }
+  useEffect(() => {
+    setStatus(() => (winnerCheck(board) ? true : false));
+    if (status) {
+      alert('Winner');
+    }
+    console.log(status);
+  }, [winnerCheck, board, status]);
   return (
     <>
       <Row>
