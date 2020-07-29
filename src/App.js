@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Nav from './components/nav';
 import { Container, Row, Col } from 'react-bootstrap';
 import Board from './components/Board';

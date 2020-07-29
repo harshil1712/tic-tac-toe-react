@@ -16,7 +16,6 @@ function Board() {
     [2, 4, 6],
   ];
   const [status, setStatus] = useState(null);
-  const [disable, setDisable] = useState(false);
   const winnerCheck = (arr) => {
     for (let i = 0; i < winningList.length; i++) {
       const [x, y, z] = winningList[i];
@@ -35,18 +34,8 @@ function Board() {
     setPlayer(() => (player === 'one' ? 'two' : 'one'));
     winnerCheck(board);
   };
-  function disableButton(i) {
-    board[i] ? setDisable(true) : setDisable(false);
-    return disable;
-  }
   function renderCell(i) {
-    return (
-      <Cell
-        value={board[i]}
-        onHandleClick={() => playerClick(i)}
-        disableBtn={() => disableButton}
-      />
-    );
+    return <Cell value={board[i]} onHandleClick={() => playerClick(i)} />;
   }
   return (
     <>
