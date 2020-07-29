@@ -5,7 +5,6 @@ import Cell from './Cell';
 function Board() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState('one');
-  //   const [text, setText] = useState('Player One Plays');
   const winningList = [
     [0, 1, 2],
     [3, 4, 5],
@@ -43,6 +42,14 @@ function Board() {
     setPlayer('one');
     setStatus('');
   }
+  function gameOver(arr) {
+    let newArr = arr.filter((ele) => ele === null);
+    console.log(newArr);
+    if (newArr.length === 0) {
+      alert('Game Over');
+      resetGame();
+    }
+  }
   useEffect(() => {
     setStatus(() => winnerCheck(board));
     if (status) {
@@ -53,6 +60,7 @@ function Board() {
       }
       resetGame();
     }
+    gameOver(board);
   }, [winnerCheck, board, status]);
 
   return (
