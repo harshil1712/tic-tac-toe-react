@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 
 function Cell({ value, onHandleClick }) {
   const disableCheck = () => {
@@ -10,9 +9,19 @@ function Cell({ value, onHandleClick }) {
     }
   };
   return (
-    <Button onClick={onHandleClick} variant="light" disabled={disableCheck()}>
+    <button
+      onClick={onHandleClick}
+      disabled={disableCheck()}
+      style={{
+        height: 84,
+        borderRadius: 0,
+        borderColor: 'black',
+        color: 'black',
+        fontSize: 32,
+      }}
+    >
       {value}
-    </Button>
+    </button>
   );
 }
 

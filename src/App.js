@@ -10,13 +10,16 @@ function App() {
     <div className="App">
       <Nav />
       <Container>
-        <Row>
-          <Col>You play X</Col>
+        <Row style={{ alignItems: 'center' }}>
+          <Col style={{ textAlign: 'center' }}>
+            <h1>Player 1 - X</h1>
+          </Col>
           <Col>
-            Board
             <Board />
           </Col>
-          <Col>Player 2 plays O</Col>
+          <Col style={{ textAlign: 'center' }}>
+            <h1>Player 2 - O</h1>
+          </Col>
         </Row>
       </Container>
     </div>

@@ -5,6 +5,7 @@ import Cell from './Cell';
 function Board() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState('one');
+  //   const [text, setText] = useState('Player One Plays');
   const winningList = [
     [0, 1, 2],
     [3, 4, 5],
@@ -15,7 +16,7 @@ function Board() {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState('');
   const winnerCheck = useCallback(
     (arr) => {
       for (let i = 0; i < winningList.length; i++) {
@@ -33,36 +34,46 @@ function Board() {
     temp[i] = player === 'one' ? 'X' : 'O';
     setBoard(temp);
     setPlayer(() => (player === 'one' ? 'two' : 'one'));
-    //
   };
   function renderCell(i) {
     return <Cell value={board[i]} onHandleClick={() => playerClick(i)} />;
   }
+  function resetGame() {
+    setBoard(Array(9).fill(null));
+    setPlayer('one');
+    setStatus('');
+  }
   useEffect(() => {
-    setStatus(() => (winnerCheck(board) ? true : false));
+    setStatus(() => winnerCheck(board));
     if (status) {
-      alert('Winner');
+      if (status === 'X') {
+        alert('Winner is Player One');
+      } else {
+        alert('Winner is Player Two');
+      }
+      resetGame();
     }
-    console.log(status);
   }, [winnerCheck, board, status]);
+
   return (
-    <>
-      <Row>
-        <Col>{renderCell(0)}</Col>
-        <Col>{renderCell(1)}</Col>
-        <Col>{renderCell(2)}</Col>
+    <div style={{ marginTop: 32, textAlign: 'center' }}>
+      <h1>{status ? `We have a Winner!` : `Player ${player} Plays`}</h1>
+      <Row style={{ marginTop: 32 }}>
+        <Col style={{ padding: 0 }}>{renderCell(0)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(1)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(2)}</Col>
       </Row>
       <Row>
-        <Col>{renderCell(3)}</Col>
-        <Col>{renderCell(4)}</Col>
-        <Col>{renderCell(5)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(3)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(4)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(5)}</Col>
       </Row>
       <Row>
-        <Col>{renderCell(6)}</Col>
-        <Col>{renderCell(7)}</Col>
-        <Col>{renderCell(8)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(6)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(7)}</Col>
+        <Col style={{ padding: 0 }}>{renderCell(8)}</Col>
       </Row>
-    </>
+    </div>
   );
 }
 
